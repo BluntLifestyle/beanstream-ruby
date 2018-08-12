@@ -22,11 +22,7 @@ module Bambora::API
   #
 
   #
-  #   def payment_returns_url(transaction_id)
-  #     uri = URI(Bambora.api_base_url)
-  #     uri.path += "/payments/#{transaction_id}/returns"
-  #     uri
-  #   end
+
   #
   #   def payment_void_url(transaction_id)
   #     uri = URI(Bambora.api_base_url)
@@ -133,11 +129,11 @@ module Bambora::API
       elsif opts.kind_of? Hash
         request = PaymentRequest.new(opts)
       else
-        raise UnsupportedOptionError, "`#{opts}` is not supported"
+        raise ::Bambora::UnsupportedOptionError, "`#{opts}` is not supported"
       end
 
       begin
-        response = RestClient.post(create_url.to_s, request.to_json, {"Authorization": "Passcode #{encoded_passcode}", "Content-Type": "application/json" })
+        response = RestClient.post(create_url.to_s, request.to_json, headers)
         if response.code == 200
           response = PaymentResponse.new(JSON.parse(response.body))
         else
@@ -150,8 +146,27 @@ module Bambora::API
       response
     end
 
-    def self.return(transaction_id)
-      RestClient.post()
+    def self.return(transaction_id, opts = {})
+      if opts.kind_of? ReturnRequest
+        request = opts
+      elsif opts.kind_of? Hash
+        request = ReturnRequest.new(opts)
+      else
+        raise ::Bambora::UnsupportedOptionError, "`#{opts}` is not supported"
+      end
+
+      begin
+        response = RestClient.post(return_url(transaction_id).to_s, request.to_json, headers)
+        if response.code == 200
+          response = PaymentResponse.new(JSON.parse(response.body))
+        else
+          raise "request error"
+        end
+      rescue RestClient::ExceptionWithResponse => e
+        response = ErrorResponse.new(JSON.parse(e.response.body))
+      end
+
+      response
     end
 
     def self.void(transaction_id)
@@ -165,9 +180,22 @@ module Bambora::API
 
     private
 
+      def self.headers
+        {
+          "Authorization": "Passcode #{encoded_passcode}",
+          "Content-Type": "application/json"
+        }
+      end
+
       def self.create_url
         uri = URI(Bambora.api_base_url)
         uri.path += '/payments'
+        uri
+      end
+
+      def self.return_url(transaction_id)
+        uri = URI(Bambora.api_base_url)
+        uri.path += "/payments/#{transaction_id}/returns"
         uri
       end
 

@@ -1,5 +1,5 @@
 module Bambora
-  class BamboraError < StandardError
+  class BamboraError < ::StandardError
 
     attr_reader :code, :category, :message, :http_status_code
 
@@ -70,5 +70,6 @@ module Bambora
   end
 
   class UnsupportedPaymentMethodError < BamboraError; end
+  class UnsupportedOptionError < BamboraError; end
 
 end

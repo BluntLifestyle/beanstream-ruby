@@ -33,8 +33,12 @@ module Bambora::API
     end
 
     describe ".return" do
-      it "returns a payment" do
+      let(:request) { build(:return_request, amount: 1.00) }
 
+      it "returns a payment" do
+        VCR.use_cassette 'payment_return' do
+          expect(Payment.return(10000001, request)).to be_approved
+        end
       end
     end
 
