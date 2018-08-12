@@ -1,4 +1,4 @@
-module Beanstream
+module Bambora
   module Util
 
     def self.symbolize_names(object)
