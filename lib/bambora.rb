@@ -1,3 +1,7 @@
+require 'active_support/all'
+require 'chronic'
+require 'rest-client'
+
 module Bambora
   autoload :BamboraError,                  'bambora/bambora_error'
   autoload :UnsupportedPaymentMethodError, 'bambora/bambora_error'
@@ -21,7 +25,9 @@ module Bambora
     autoload :Report,                      'bambora/api/report'
     autoload :ResponseHelpers,             'bambora/api/response_helpers.rb'
     autoload :ReturnRequest,               'bambora/api/return_request'
+    autoload :SearchRecord,                'bambora/api/search_record'
     autoload :SearchRequest,               'bambora/api/search_request'
+    autoload :SearchResponse,              'bambora/api/search_response'
     autoload :Secure3D,                    'bambora/api/secure_3d'
     autoload :Transaction,                 'bambora/api/transaction'
     autoload :VoidRequest,                 'bambora/api/void_request'

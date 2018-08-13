@@ -1,12 +1,4 @@
 
-#   class Reporting < Transaction
-#
-#     def reports_url
-#       uri = URI(Bambora.api_base_url)
-#       uri.path += "/reports"
-#       uri
-#     end
-#
 #     def search_transactions(start_date, end_date, start_row, end_row, criteria=nil)
 #       if !start_date.is_a?(Time)
 #         raise InvalidRequestException.new(0, 0, "start_date must be of type Time in ReportingApi.search_transactions", 0)
@@ -26,10 +18,10 @@
 #       startD = start_date.strftime "%Y-%m-%dT%H:%M:%S"
 #       endD = end_date.strftime "%Y-%m-%dT%H:%M:%S"
 #
-#       criteria_hash = Array[]
+#       criterias = Array[]
 #       if criteria != nil && criteria.length > 0
 #         for c in criteria
-#           criteria_hash << c.to_hash
+#           criterias << c.to_hash
 #         end
 #       end
 #       query = {
@@ -38,15 +30,12 @@
 #         "end_date" => endD,
 #         "start_row" => start_row,
 #         "end_row" => end_row,
-#         "criteria" => criteria_hash
+#         "criteria" => criterias
 #       }
 #       puts "\n\nReport search query #{query}\n\n"
 #       val = transaction_post("POST", reports_url, Bambora.merchant_id, Bambora.reporting_api_key, query)
 #       results = val['records']
 #     end
-#
-#   end
-# end
 
 module Bambora::API
   class Report
@@ -66,9 +55,9 @@ module Bambora::API
       end
 
       begin
-        response = RestClient.post(search_url, request.to_json, headers)
+        response = RestClient.post(search_url.to_s, request.to_json, headers)
         if response.code == 200
-          response = PaymentResponse.new(JSON.parse(response.body))
+          response = SearchResponse.new(JSON.parse(response.body))
         else
           raise "request error"
         end
@@ -78,5 +67,20 @@ module Bambora::API
 
       response
     end
+
+    # convenience method for minimal search
+    def self.minimal(data = {})
+      data.merge!(name: 'TransHistoryMinimal')
+      search(data)
+    end
+
+    private
+
+      def self.search_url
+        uri = URI(Bambora.api_base_url)
+        uri.path += '/reports'
+        uri
+      end
+
   end
 end

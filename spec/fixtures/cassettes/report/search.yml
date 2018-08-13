@@ -1,0 +1,70 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.na.bambora.com/v1/reports
+    body:
+      encoding: UTF-8
+      string: '{"name":"Search","start_date":"2018-08-13T00:00:00","end_date":"2018-08-13T23:59:59","start_row":1,"end_row":2,"criteria":[{"field":2,"operator":"%3D","value":10.0}]}'
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (linux-gnu x86_64) ruby/2.4.0p0
+      Authorization:
+      - Passcode MzAwMjA1OTQ4OmRDRDAzMjBlRjY0NTQ1MkY4Mjg1ODlGMGU0M0I0MjI0
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '166'
+      Host:
+      - api.na.bambora.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Pragma:
+      - no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Expires:
+      - "-1"
+      Server:
+      - Microsoft-IIS/8.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - accept, origin, content-type
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Date:
+      - Mon, 13 Aug 2018 22:12:01 GMT
+      Connection:
+      - close
+      Content-Length:
+      - '2309'
+    body:
+      encoding: UTF-8
+      string: '{"records":[{"row_id":1,"trn_id":10000024,"trn_date_time":"2018-08-13T15:49:37.134-04:00","trn_type":"R","trn_order_number":"8013982552","trn_payment_method":"CC","trn_comments":"","trn_masked_card":"2333","trn_amount":"10.00","trn_returns":"0.00","trn_completions":"0.00","trn_voided":0,"trn_response":1,"trn_card_type":"VI","trn_batch_no":224,"trn_avs_result":"U","trn_cvd_result":6,"trn_card_expiry":"1218","message_id":1,"message_text":"Approved","trn_card_owner":"Neda
+        Kutch","trn_ip":"24.202.81.214","trn_approval_code":"TEST","trn_reference":0,"b_name":"Clelia
+        Hilll","b_email":"","b_phone":"","b_address1":"1407 Graymalkin Lane","b_address2":"","b_city":"Gatineau","b_province":"QC","b_postal":"111
+        111","b_country":"CA","s_name":"Ozella Oga","s_email":"","s_phone":"","s_address1":"1407
+        Graymalkin Lane","s_address2":"","s_city":"Gatineau","s_province":"QC","s_postal":"111
+        111","s_country":"CA","ref1":"","ref2":"","ref3":"","ref4":"","ref5":"","product_name":"","product_id":"","customer_code":"","currency_abbr":"CAD","merchant_id":300205948,"merchant_name":"Blunt_Inc","entry_method":"N","authorizing_merchant_id":300205948,"trn_cavv_result":""},{"row_id":2,"trn_id":10000023,"trn_date_time":"2018-08-13T15:49:36.498-04:00","trn_type":"P","trn_order_number":"8013982552","trn_payment_method":"CC","trn_comments":"","trn_masked_card":"2333","trn_amount":"10.00","trn_returns":"10.00","trn_completions":"10.00","trn_voided":0,"trn_response":1,"trn_card_type":"VI","trn_batch_no":224,"trn_avs_result":"Y","trn_cvd_result":1,"trn_card_expiry":"1218","message_id":1,"message_text":"Approved","trn_card_owner":"Neda
+        Kutch","trn_ip":"24.202.81.214","trn_approval_code":"TEST","trn_reference":0,"b_name":"Clelia
+        Hilll","b_email":"","b_phone":"","b_address1":"1407 Graymalkin Lane","b_address2":"","b_city":"Gatineau","b_province":"QC","b_postal":"111
+        111","b_country":"CA","s_name":"Ozella Oga","s_email":"","s_phone":"","s_address1":"1407
+        Graymalkin Lane","s_address2":"","s_city":"Gatineau","s_province":"QC","s_postal":"111
+        111","s_country":"CA","ref1":"","ref2":"","ref3":"","ref4":"","ref5":"","product_name":"","product_id":"","customer_code":"","currency_abbr":"CAD","merchant_id":300205948,"merchant_name":"Blunt_Inc","entry_method":"N","authorizing_merchant_id":300205948,"trn_cavv_result":""}]}'
+    http_version: 
+  recorded_at: Mon, 13 Aug 2018 22:12:02 GMT
+recorded_with: VCR 4.0.0

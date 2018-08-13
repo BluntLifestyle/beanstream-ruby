@@ -20,6 +20,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'rest-client'
   s.add_dependency 'json'
+  s.add_dependency 'chronic'
+  s.add_dependency 'activesupport'
 
   s.add_development_dependency 'shoulda-matchers'
   s.add_development_dependency 'rspec', '~> 3.6'
