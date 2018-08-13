@@ -16,7 +16,9 @@ module Bambora::API
 
         it "makes a new payment" do
           VCR.use_cassette('payment_create_approved') do
-            expect(Payment.create(request)).to be_approved
+            response = Payment.create(request)
+            expect(response).to be_approved
+            expect(response.type).to eq('P')
           end
         end
       end
@@ -26,7 +28,8 @@ module Bambora::API
 
         it "declines the payment" do
           VCR.use_cassette('payment_create_denied') do
-            expect(Payment.create(request)).to be_declined
+            response = Payment.create(request)
+            expect(response).to be_declined
           end
         end
       end
@@ -37,14 +40,34 @@ module Bambora::API
 
       it "returns a payment" do
         VCR.use_cassette 'payment_return' do
-          expect(Payment.return(10000001, request)).to be_approved
+          response = Payment.return(10000001, request)
+          expect(response).to be_approved
+          expect(response.type).to eq('R')
         end
       end
     end
 
     describe ".void" do
-      it "voids a payment" do
+      let(:request) { build(:void_request, amount: 1.00) }
 
+      it "voids a payment" do
+        VCR.use_cassette 'payment_void' do
+          response = Payment.void(10000003, request)
+          expect(response).to be_approved
+          expect(response.type).to eq('VR')
+        end
+      end
+    end
+
+    describe ".preauth" do
+      let(:request) { build(:payment_request).to_h }
+
+      it "pre-authorizes a payment" do
+        VCR.use_cassette('payment_preauth') do
+          response = Payment.preauth(request)
+          expect(response).to be_approved
+          expect(response.type).to eq('PA')
+        end
       end
     end
 

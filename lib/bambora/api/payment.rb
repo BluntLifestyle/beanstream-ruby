@@ -3,33 +3,12 @@ require 'rest-client'
 
 module Bambora::API
 
-  # class PaymentMethods
-  #   CARD = "card"
-  #   CASH = "cash"
-  #   CHEQUE = "cheque"
-  #   TOKEN = "token"
-  #   PROFILE = "payment_profile"
-  # end
-  #
   # class Payments < Transaction
   #
   #   def self.generateRandomOrderId(prefix)
   #     "#{prefix}_#{SecureRandom.hex(8)}"
   #   end
-  #
-  #
-  #   # Urls
-  #
 
-  #
-
-  #
-  #   def payment_void_url(transaction_id)
-  #     uri = URI(Bambora.api_base_url)
-  #     uri.path += "/payments/#{transaction_id}/void"
-  #     uri
-  #   end
-  #
   #   def get_transaction_url(transaction_id)
   #     uri = URI(Bambora.api_base_url)
   #     uri.path += "/payments/#{transaction_id}"
@@ -102,20 +81,6 @@ module Bambora::API
   #     result = Transaction.new().post("POST", turl, "", "", card_info)
   #     token = result['token']
   #   end
-  #
-  #   def get_transaction(transaction_id)
-  #     post("GET", get_transaction_url(transaction_id), Bambora.merchant_id, Bambora.payments_api_key)
-  #   end
-  #
-  #   def return_payment(transaction_id, amount)
-  #     data = { amount: amount }
-  #     post("POST", payment_returns_url(transaction_id), Bambora.merchant_id, Bambora.payments_api_key, data)
-  #   end
-  #
-  #   def void_payment(transaction_id, amount)
-  #     data = { amount: amount }
-  #     post("POST", payment_void_url(transaction_id), Bambora.merchant_id, Bambora.payments_api_key, data)
-  #   end
 
   class Payment
     extend Authorization
@@ -146,6 +111,12 @@ module Bambora::API
       response
     end
 
+    # convenience method for preauthorizing payments
+    def self.preauth(opts = {})
+      opts[opts[:payment_method]].merge!(complete: false)
+      create(opts)
+    end
+
     def self.return(transaction_id, opts = {})
       if opts.kind_of? ReturnRequest
         request = opts
@@ -169,7 +140,27 @@ module Bambora::API
       response
     end
 
-    def self.void(transaction_id)
+    def self.void(transaction_id, opts = {})
+      if opts.kind_of? VoidRequest
+        request = opts
+      elsif opts.kind_of? Hash
+        request = VoidRequest.new(opts)
+      else
+        raise ::Bambora::UnsupportedOptionError, "`#{opts}` is not supported"
+      end
+
+      begin
+        response = RestClient.post(void_url(transaction_id).to_s, request.to_json, headers)
+        if response.code == 200
+          response = PaymentResponse.new(JSON.parse(response.body))
+        else
+          raise "request error"
+        end
+      rescue RestClient::ExceptionWithResponse => e
+        response = ErrorResponse.new(JSON.parse(e.response.body))
+      end
+
+      response
     end
 
     def self.completion(transaction_id)
@@ -196,6 +187,12 @@ module Bambora::API
       def self.return_url(transaction_id)
         uri = URI(Bambora.api_base_url)
         uri.path += "/payments/#{transaction_id}/returns"
+        uri
+      end
+
+      def self.void_url(transaction_id)
+        uri = URI(Bambora.api_base_url)
+        uri.path += "/payments/#{transaction_id}/void"
         uri
       end
 

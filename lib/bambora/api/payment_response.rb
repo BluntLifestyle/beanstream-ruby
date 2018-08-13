@@ -8,6 +8,11 @@ module Bambora::API
 
     def initialize(args = {})
       args = {} if args.nil?
+      if args.respond_to? :symbolize_keys!
+        args.symbolize_keys!
+      else
+        symbolize_keys(args)
+      end
       self.id = args[:id]
       self.authorizing_merchant_id = args[:authorizing_merchant_id]
       self.approved = args[:approved]
@@ -54,5 +59,14 @@ module Bambora::API
       return false if approved == 0
       true
     end
+
+    private
+
+      def symbolize_keys(h)
+        h.keys.each do |key|
+          h[(key.to_sym rescue key) || key] = h.delete(key)
+        end
+      end
+
   end
 end

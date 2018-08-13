@@ -3,7 +3,7 @@ module Bambora::API
 
     attr_accessor :number, :name, :expiry_month, :expiry_year, :cvd,
                   :_3d_secure, :masterpass_wallet_id, :visa_checkout_call_id,
-                  :is_accord_d, :accord_d
+                  :is_accord_d, :accord_d, :complete
 
     alias_method :is_accord_d?, :is_accord_d
 
@@ -19,6 +19,7 @@ module Bambora::API
       self.visa_checkout_call_id = args[:visa_checkout_call_id]
       self.is_accord_d = args[:is_accord_d] || false
       self.accord_d = AccordD.new(args[:accord_d])
+      self.complete = args[:complete]
     end
 
     def to_h
@@ -33,6 +34,7 @@ module Bambora::API
       h.merge!(masterpass_wallet_id: masterpass_wallet_id) unless masterpass_wallet_id.nil?
       h.merge!(visa_checkout_call_id: visa_checkout_call_id) unless visa_checkout_call_id.nil?
       h.merge!(is_accord_d: is_accord_d, accord_d: accord_d) if is_accord_d?
+      h.merge!(complete: complete) unless complete.nil?
       h
     end
   end

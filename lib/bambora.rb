@@ -17,6 +17,7 @@ module Bambora
     autoload :ReturnRequest,               'bambora/api/return_request'
     autoload :Secure3D,                    'bambora/api/secure_3d'
     autoload :Transaction,                 'bambora/api/transaction'
+    autoload :VoidRequest,                 'bambora/api/void_request'
   end
 
   @host = "https://api.na.bambora.com"
