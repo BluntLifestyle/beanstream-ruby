@@ -1,5 +1,6 @@
 module Bambora::API
   class PaymentResponse
+    include ResponseHelpers
 
     attr_accessor :id, :authorizing_merchant_id, :approved, :message_id,
                   :message, :auth_code, :created, :order_number, :type,
@@ -53,11 +54,6 @@ module Bambora::API
         interac_online: interac_online,
         links: links
       }
-    end
-
-    def approved?
-      return false if approved == 0
-      true
     end
 
     private

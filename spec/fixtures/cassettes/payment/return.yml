@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.na.bambora.com/v1/payments/10000003/void
+    uri: https://api.na.bambora.com/v1/payments/10000014/returns
     body:
       encoding: UTF-8
-      string: '{"amount":1.0,"order_number":"7708044544"}'
+      string: '{"amount":10.0,"order_number":"7618699114"}'
     headers:
       Accept:
       - "*/*"
@@ -18,7 +18,7 @@ http_interactions:
       Content-Type:
       - application/json
       Content-Length:
-      - '42'
+      - '43'
       Host:
       - api.na.bambora.com
   response:
@@ -47,15 +47,15 @@ http_interactions:
       X-Ua-Compatible:
       - IE=edge,chrome=1
       Date:
-      - Mon, 13 Aug 2018 00:02:07 GMT
+      - Mon, 13 Aug 2018 15:36:52 GMT
       Connection:
       - close
       Content-Length:
-      - '508'
+      - '709'
     body:
       encoding: UTF-8
-      string: '{"id":"10000004","authorizing_merchant_id":300205948,"approved":"1","message_id":"1","message":"Approved","auth_code":"TEST","created":"2018-08-12T20:02:07","order_number":"7708044544","type":"VR","payment_method":"CC","risk_score":0.0,"amount":1.00,"custom":{"ref1":"","ref2":"","ref3":"","ref4":"","ref5":""},"card":{"card_type":"VI","address_match":0,"postal_result":0,"avs_result":"0","cvd_result":"5","cavv_result":"
-        ","avs":{"id":"U","message":"Address information is unavailable.","processed":false}}}'
+      string: '{"id":"10000015","authorizing_merchant_id":300205948,"approved":"1","message_id":"1","message":"Approved","auth_code":"TEST","created":"2018-08-13T11:36:53","order_number":"7618699114","type":"R","payment_method":"CC","risk_score":0.0,"amount":10.00,"custom":{"ref1":"","ref2":"","ref3":"","ref4":"","ref5":""},"card":{"card_type":"VI","address_match":0,"postal_result":0,"avs_result":"0","cvd_result":"1","cavv_result":"
+        ","avs":{"id":"U","message":"Address information is unavailable.","processed":false}},"links":[{"rel":"void","href":"https://api.na.bambora.com/v1/payments/10000015/void","method":"POST"},{"rel":"return","href":"https://api.na.bambora.com/v1/payments/10000015/returns","method":"POST"}]}'
     http_version: 
-  recorded_at: Mon, 13 Aug 2018 00:02:07 GMT
+  recorded_at: Mon, 13 Aug 2018 15:36:53 GMT
 recorded_with: VCR 4.0.0

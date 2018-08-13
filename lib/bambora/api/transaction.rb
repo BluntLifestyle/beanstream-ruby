@@ -1,5 +1,6 @@
 module Bambora::API
   class Transaction
+    include ResponseHelpers
 
     attr_accessor :id, :authorizing_merchant_id, :approved, :message_id,
                   :message, :auth_code, :created, :amount, :order_number, :type,

@@ -15,6 +15,7 @@ module Bambora
     autoload :Payment,                     'bambora/api/payment'
     autoload :Profiles,                    'bambora/api/profiles'
     autoload :Reporting,                   'bambora/api/reporting'
+    autoload :ResponseHelpers,             'bambora/api/response_helpers.rb'
     autoload :ReturnRequest,               'bambora/api/return_request'
     autoload :Secure3D,                    'bambora/api/secure_3d'
     autoload :Transaction,                 'bambora/api/transaction'

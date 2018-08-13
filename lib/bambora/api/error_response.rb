@@ -22,6 +22,10 @@ module Bambora::API
       false
     end
 
+    def approved?
+      false
+    end
+
     private
 
       def symbolize_keys(h)
