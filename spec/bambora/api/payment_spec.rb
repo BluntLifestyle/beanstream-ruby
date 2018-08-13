@@ -94,7 +94,33 @@ module Bambora::API
     end
 
     describe ".continue" do
+      # context "when using Interac" do
+      #   let(:interac_request) { build(:payment_request, payment_method: :interac).to_h }
+      #   let(:continue_request) { build(:continue_request).to_h }
+      #
+      #   it "continues a payment" do
+      #     VCR.use_cassette('payment_continue_interac') do
+      #       response = Payment.continue(merchant_data, request)
+      #       expect(response).to be_approved
+      #       expect(response.type).to eq('P')
+      #     end
+      #   end
+      # end
 
+      # context "when using 3D Secure" do
+      #   let(:secure_3d_request) { build(:continue_request, card: build(:card, number: '4003050500040005', '3d_secure': build(:secure_3d))).to_h }
+      #   let(:continue_request) { build(:continue_request).to_h }
+      #
+      #   it "continues a payment" do
+      #     VCR.use_cassette('payment_continue_3d_secure') do
+      #       merchant_data = Payment.create()
+      #
+      #       response = Payment.continue(merchant_data, request)
+      #       expect(response).to be_approved
+      #       expect(response.type).to eq('P')
+      #     end
+      #   end
+      # end
     end
 
   end

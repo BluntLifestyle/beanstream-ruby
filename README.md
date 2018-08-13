@@ -33,6 +33,5 @@ response = Payment.create({
 })
 ```
 
-
 # Reporting Issues
 Found a bug or want a feature improvement? Create a new Issue here on the github page, or email Bambora support support@beanstream.com

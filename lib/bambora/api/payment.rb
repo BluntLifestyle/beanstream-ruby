@@ -3,57 +3,9 @@ require 'rest-client'
 
 module Bambora::API
 
-  # class Payments < Transaction
-  #
   #   def self.generateRandomOrderId(prefix)
   #     "#{prefix}_#{SecureRandom.hex(8)}"
   #   end
-
-  #   def get_transaction_url(transaction_id)
-  #     uri = URI(Bambora.api_base_url)
-  #     uri.path += "/payments/#{transaction_id}"
-  #     uri
-  #   end
-  #
-  #   #Payment Request Hash for making a payment with a Legato token
-  #   def getTokenPaymentRequestTemplate()
-  #     request = template
-  #     request[:payment_method] = PaymentMethods::TOKEN
-  #     request[:token] = {
-  #       :name => "",
-  #       :code => "",
-  #       :complete => true
-  #     }
-  #     return request
-  #   end
-  #
-  #   #Payment Request Hash for making a payment with a credit card number
-  #   def getCardPaymentRequestTemplate()
-  #     request = template
-  #     request[:payment_method] = PaymentMethods::CARD
-  #     request[:card] = {
-  #       :name => "",
-  #       :number => "",
-  #       :expiry_month => "",
-  #       :expiry_year => "",
-  #       :cvd => "",
-  #       :complete => true
-  #      }
-  #      return request
-  #   end
-  #
-  #   #Payment Request Hash for making a payment with a Payment Profile
-  #   def getProfilePaymentRequestTemplate()
-  #     request = template
-  #     request[:payment_method] = PaymentMethods::PROFILE
-  #     request[:payment_profile] = {
-  #       :customer_code => "",
-  #       :card_id => 1,
-  #       :complete => true
-  #     }
-  #     return request
-  #   end
-
 
   #   #API operations
   #
@@ -66,7 +18,6 @@ module Bambora::API
   #     val = post("POST", make_payment_url, Bambora.merchant_id, Bambora.payments_api_key, payment)
   #   end
   #
-
 
   #   def self.payment_approved(payment_response)
   #     success = payment_response['approved'] == "1" && payment_response['message'] == "Approved"
@@ -84,13 +35,13 @@ module Bambora::API
     self.merchant_id = -> { Bambora.merchant_id }
     self.passcode = -> { Bambora.payments_api_key }
 
-    def self.create(opts = {})
-      if opts.kind_of? PaymentRequest
-        request = opts
-      elsif opts.kind_of? Hash
-        request = PaymentRequest.new(opts)
+    def self.create(data = {})
+      if data.kind_of? PaymentRequest
+        request = data
+      elsif data.kind_of? Hash
+        request = PaymentRequest.new(data)
       else
-        raise ::Bambora::UnsupportedOptionError, "`#{opts}` is not supported"
+        raise ::Bambora::UnsupportedOptionError, "`#{data}` is not supported"
       end
 
       begin
@@ -108,18 +59,18 @@ module Bambora::API
     end
 
     # convenience method for preauthorizing payments
-    def self.preauth(opts = {})
-      opts[opts[:payment_method]].merge!(complete: false)
-      create(opts)
+    def self.preauth(data = {})
+      data[data[:payment_method]].merge!(complete: false)
+      create(data)
     end
 
-    def self.return(transaction_id, opts = {})
-      if opts.kind_of? ReturnRequest
-        request = opts
-      elsif opts.kind_of? Hash
-        request = ReturnRequest.new(opts)
+    def self.return(transaction_id, data = {})
+      if data.kind_of? ReturnRequest
+        request = data
+      elsif data.kind_of? Hash
+        request = ReturnRequest.new(data)
       else
-        raise ::Bambora::UnsupportedOptionError, "`#{opts}` is not supported"
+        raise ::Bambora::UnsupportedOptionError, "`#{data}` is not supported"
       end
 
       begin
@@ -136,13 +87,13 @@ module Bambora::API
       response
     end
 
-    def self.void(transaction_id, opts = {})
-      if opts.kind_of? VoidRequest
-        request = opts
-      elsif opts.kind_of? Hash
-        request = VoidRequest.new(opts)
+    def self.void(transaction_id, data = {})
+      if data.kind_of? VoidRequest
+        request = data
+      elsif data.kind_of? Hash
+        request = VoidRequest.new(data)
       else
-        raise ::Bambora::UnsupportedOptionError, "`#{opts}` is not supported"
+        raise ::Bambora::UnsupportedOptionError, "`#{data}` is not supported"
       end
 
       begin
@@ -159,13 +110,13 @@ module Bambora::API
       response
     end
 
-    def self.completion(transaction_id, opts)
-      if opts.kind_of? PaymentRequest
-        request = opts
-      elsif opts.kind_of? Hash
-        request = PaymentRequest.new(opts)
+    def self.completion(transaction_id, data)
+      if data.kind_of? PaymentRequest
+        request = data
+      elsif data.kind_of? Hash
+        request = PaymentRequest.new(data)
       else
-        raise ::Bambora::UnsupportedOptionError, "`#{opts}` is not supported"
+        raise ::Bambora::UnsupportedOptionError, "`#{data}` is not supported"
       end
 
       begin
@@ -197,8 +148,27 @@ module Bambora::API
       response
     end
 
-    def self.continue(merchant_data)
+    def self.continue(merchant_data, data)
+      if data.kind_of? ContinueRequest
+        request = data
+      elsif data.kind_of? Hash
+        request = ContinueRequest.new(data)
+      else
+        raise ::Bambora::UnsupportedOptionError, "`#{data}` is not supported"
+      end
 
+      begin
+        response = RestClient.post(continue_url(merchant_data).to_s, request.to_json, headers)
+        if response.code == 200
+          response = PaymentResponse.new(JSON.parse(response.body))
+        else
+          raise "request error"
+        end
+      rescue RestClient::ExceptionWithResponse => e
+        response = ErrorResponse.new(JSON.parse(e.response.body))
+      end
+
+      response
     end
 
     private
@@ -237,6 +207,12 @@ module Bambora::API
       def self.completion_url(transaction_id)
         uri = URI(Bambora.api_base_url)
         uri.path += "/payments/#{transaction_id}/completions"
+        uri
+      end
+
+      def self.continue_url(merchant_data)
+        uri = URI(Bambora.api_base_url)
+        uri.path += "/payments/#{merchant_data}/continue"
         uri
       end
 
