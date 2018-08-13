@@ -6,6 +6,7 @@ module Bambora
     autoload :AccordD,                     'bambora/api/accord_d'
     autoload :Address,                     'bambora/api/address'
     autoload :Authorization,               'bambora/api/authorization'
+    autoload :CardResponse,                'bambora/api/card_response'
     autoload :Card,                        'bambora/api/card'
     autoload :Custom,                      'bambora/api/custom'
     autoload :ErrorResponse,               'bambora/api/error_response'

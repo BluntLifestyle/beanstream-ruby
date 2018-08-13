@@ -1,114 +1,85 @@
-require 'rest-client'
-require 'base64'
-require 'json'
-
 module Bambora::API
   class Transaction
 
-    def initialize(merchant_id = Bambora.merchant_id, passcode = Bambora.payments_api_key)
-      @merchant_id = merchant_id
-      @passcode = passcode
+    attr_accessor :id, :authorizing_merchant_id, :approved, :message_id,
+                  :message, :auth_code, :created, :amount, :order_number, :type,
+                  :comments, :batch_number, :total_refunds, :total_completions,
+                  :payment_method, :card, :billing, :shipping, :custom,
+                  :adjusted_by, :links
+
+
+    def initialize(args = {})
+      args = {} if args.nil?
+      if args.respond_to? :symbolize_keys!
+        args.symbolize_keys!
+      else
+        symbolize_keys(args)
+      end
+      self.id = args[:id]
+      self.authorizing_merchant_id = args[:authorizing_merchant_id]
+      self.approved = args[:approved]
+      self.message_id = args[:message_id]
+      self.message = args[:message]
+      self.auth_code = args[:auth_code]
+      self.created = args[:created]
+      self.amount = args[:amount]
+      self.order_number = args[:order_number]
+      self.type = args[:type]
+      self.comments = args[:comments]
+      self.batch_number = args[:batch_number]
+      self.total_refunds = args[:total_refunds]
+      self.total_completions = args[:total_completions]
+      self.payment_method = args[:payment_method]
+      self.card = CardResponse.new(args[:card])
+      self.billing = Address.new(args[:billing])
+      self.shipping = Address.new(args[:shipping])
+      self.custom = Custom.new(args[:custom])
+      self.adjusted_by = args[:adjusted_by]
+      self.links = args[:links]
     end
 
-    def encode(merchant_id, api_key)
-      str = [merchant_id, api_key].join(':')
-      Base64.encode64(str).strip
-    end
-
-    def post(method, url_path, merchant_id, api_key, data = {})
-      enc = encode(merchant_id, api_key)
-
-      path = URI(Bambora.api_host_url).path = url_path
-
-      req_params = {
-        verify_ssl: OpenSSL::SSL::VERIFY_PEER,
-        ssl_ca_file: Bambora.ssl_ca_cert,
-        timeout: Bambora.timeout,
-        open_timeout: Bambora.open_timeout,
-        headers: {
-          authorization: "Passcode #{enc}",
-          content_type: "application/json"
-        },
-        method: method,
-        url: path,
-        payload: data.to_json
+    def to_h
+      {
+        id: id,
+        authorizing_merchant_id: authorizing_merchant_id,
+        approved: approved,
+        message_id: message_id,
+        message: message,
+        auth_code: auth_code,
+        created: created,
+        amount: amount,
+        order_number: order_number,
+        type: type,
+        comments: comments,
+        batch_number: batch_number,
+        total_refunds: total_refunds,
+        total_completions: total_completions,
+        payment_method: payment_method,
+        card: card,
+        billing: billing,
+        shipping: shipping,
+        custom: custom,
+        adjusted_by: adjusted_by,
+        links: links
       }
+    end
 
-      begin
-        result = RestClient::Request.execute(req_params)
-        returns = JSON.parse(result)
-      rescue RestClient::ExceptionWithResponse => ex
-        if ex.response
-          raise handle_api_error(ex)
-        else
-          raise handle_restclient_error(ex)
+    def to_json
+      to_h.to_json
+    end
+
+    def approved?
+      return false if approved == 0
+      true
+    end
+
+    private
+
+      def symbolize_keys(h)
+        h.keys.each do |key|
+          h[(key.to_sym rescue key) || key] = h.delete(key)
         end
-      rescue RestClient::Exception => ex
-        raise handle_restclient_error(ex)
       end
 
-    end
-
-    def handle_api_error(ex)
-      http_status_code = ex.http_code
-      message = ex.message
-      code = 0
-      category = 0
-
-      begin
-        obj = JSON.parse(ex.http_body)
-        obj = Util.symbolize_names(obj)
-        code = obj[:code]
-        category = obj[:category]
-        message = obj[:message]
-      rescue JSON::ParserError
-        puts "Error parsing json error message"
-      end
-
-      if http_status_code == 302
-        raise InvalidRequestException.new(code, category, "Redirection for IOP and 3dSecure not supported by the Bambora SDK yet. #{message}", http_status_code)
-      elsif http_status_code == 400
-        raise InvalidRequestException.new(code, category, message, http_status_code)
-      elsif code == 401
-        raise UnauthorizedException.new(code, category, message, http_status_code)
-      elsif code == 402
-        raise BusinessRuleException.new(code, category, message, http_status_code)
-      elsif code == 403
-        raise ForbiddenException.new(code, category, message, http_status_code)
-      elsif code == 405
-        raise InvalidRequestException.new(code, category, message, http_status_code)
-      elsif code == 415
-        raise InvalidRequestException.new(code, category, message, http_status_code)
-      elsif code >= 500
-        raise InternalServerException.new(code, category, message, http_status_code)
-      else
-        raise BamboraException.new(code, category, message, http_status_code)
-      end
-    end
-
-    def handle_restclient_error(e)
-
-      case e
-      when RestClient::RequestTimeout
-        message = "Could not connect to Bambora"
-
-      when RestClient::ServerBrokeConnection
-        message = "The connection to the server broke before the request completed."
-
-      when RestClient::SSLCertificateNotVerified
-        message = "Could not verify Bambora's SSL certificate. " \
-          "Please make sure that your network is not intercepting certificates. "
-
-      when SocketError
-        message = "Unexpected error communicating when trying to connect to Bambora. "
-
-      else
-        message = "Unexpected error communicating with Bambora. "
-
-      end
-
-      raise APIConnectionError.new(message + "\n\n(Network error: #{e.message})")
-    end
   end
-
 end

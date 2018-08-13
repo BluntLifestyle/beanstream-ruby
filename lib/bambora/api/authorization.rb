@@ -19,7 +19,9 @@ module Bambora::API
     end
 
     def encoded_passcode
-      str = [merchant_id.call, passcode.call].join(':')
+      id = merchant_id.respond_to?(:call) ? merchant_id.call : merchant_id
+      pass = passcode.respond_to?(:call) ? passcode.call : passcode
+      str = [id, pass].join(':')
       Base64.encode64(str).strip
     end
   end

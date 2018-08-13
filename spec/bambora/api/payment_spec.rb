@@ -72,14 +72,24 @@ module Bambora::API
     end
 
     describe ".completion" do
-      it "completes a pre-authorized payment" do
+      let(:request) { build(:payment_request).to_h }
 
+      it "completes a pre-authorized payment" do
+        VCR.use_cassette('payment_completion') do
+          response = Payment.completion(10000006, request)
+          expect(response).to be_approved
+          expect(response.type).to eq('PAC')
+        end
       end
     end
 
     describe ".get" do
       it "gets a payment" do
-
+        VCR.use_cassette('payment_get') do
+          response = Payment.get(10000001)
+          expect(response).to be_approved
+          expect(response.type).to eq('P')
+        end
       end
     end
 

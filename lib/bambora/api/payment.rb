@@ -66,12 +66,8 @@ module Bambora::API
   #     val = post("POST", make_payment_url, Bambora.merchant_id, Bambora.payments_api_key, payment)
   #   end
   #
-  #   def complete_preauth(transaciton_id, amount)
-  #     complete_url = make_payment_url+transaciton_id+"/completions"
-  #     completion = { :amount => amount }
-  #     val = post("POST", complete_url, Bambora.merchant_id, Bambora.payments_api_key, completion)
-  #   end
-  #
+
+
   #   def self.payment_approved(payment_response)
   #     success = payment_response['approved'] == "1" && payment_response['message'] == "Approved"
   #   end
@@ -163,10 +159,46 @@ module Bambora::API
       response
     end
 
-    def self.completion(transaction_id)
+    def self.completion(transaction_id, opts)
+      if opts.kind_of? PaymentRequest
+        request = opts
+      elsif opts.kind_of? Hash
+        request = PaymentRequest.new(opts)
+      else
+        raise ::Bambora::UnsupportedOptionError, "`#{opts}` is not supported"
+      end
+
+      begin
+        response = RestClient.post(completion_url(transaction_id).to_s, request.to_json, headers)
+        if response.code == 200
+          response = PaymentResponse.new(JSON.parse(response.body))
+        else
+          raise "request error"
+        end
+      rescue RestClient::ExceptionWithResponse => e
+        response = ErrorResponse.new(JSON.parse(e.response.body))
+      end
+
+      response
     end
 
     def self.get(transaction_id)
+      begin
+        response = RestClient.get(get_url(transaction_id).to_s, headers)
+        if response.code == 200
+          response = Transaction.new(JSON.parse(response.body))
+        else
+          raise "request error"
+        end
+      rescue RestClient::ExceptionWithResponse => e
+        response = ErrorResponse.new(JSON.parse(e.response.body))
+      end
+
+      response
+    end
+
+    def self.continue(merchant_data)
+
     end
 
     private
@@ -193,6 +225,18 @@ module Bambora::API
       def self.void_url(transaction_id)
         uri = URI(Bambora.api_base_url)
         uri.path += "/payments/#{transaction_id}/void"
+        uri
+      end
+
+      def self.get_url(transaction_id)
+        uri = URI(Bambora.api_base_url)
+        uri.path += "/payments/#{transaction_id}"
+        uri
+      end
+
+      def self.completion_url(transaction_id)
+        uri = URI(Bambora.api_base_url)
+        uri.path += "/payments/#{transaction_id}/completions"
         uri
       end
 
