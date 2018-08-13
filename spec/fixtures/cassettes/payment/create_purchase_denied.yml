@@ -5,12 +5,12 @@ http_interactions:
     uri: https://api.na.bambora.com/v1/payments
     body:
       encoding: UTF-8
-      string: '{"amount":"4.64","payment_method":"card","order_number":"2399312623","billing":{"name":"Kirsten
-        Olson","address_line1":"1407 Graymalkin Lane","address_line2":"","city":"Gatineau","province":"QC","country":"CA","postal_code":"111
-        111","phone_number":"","email_address":""},"shipping":{"name":"Tricia Rohan","address_line1":"1407
+      string: '{"amount":"56.98","payment_method":"card","order_number":"7362569752","billing":{"name":"Gonzalo
+        Swift","address_line1":"1407 Graymalkin Lane","address_line2":"","city":"Gatineau","province":"QC","country":"CA","postal_code":"111
+        111","phone_number":"","email_address":""},"shipping":{"name":"Floria Hoeger","address_line1":"1407
         Graymalkin Lane","address_line2":"","city":"Gatineau","province":"QC","country":"CA","postal_code":"111
-        111","phone_number":"","email_address":""},"card":{"number":"4003050500040005","name":"Esperanza
-        Abbott","expiry_month":"12","expiry_year":"18","cvd":"123"}}'
+        111","phone_number":"","email_address":""},"card":{"number":"4003050500040005","name":"Jon
+        Hermiston","expiry_month":"12","expiry_year":"18","cvd":"123"}}'
     headers:
       Accept:
       - "*/*"
@@ -23,7 +23,7 @@ http_interactions:
       Content-Type:
       - application/json
       Content-Length:
-      - '589'
+      - '588'
       Host:
       - api.na.bambora.com
   response:
@@ -52,7 +52,7 @@ http_interactions:
       X-Ua-Compatible:
       - IE=edge,chrome=1
       Date:
-      - Mon, 13 Aug 2018 15:15:21 GMT
+      - Mon, 13 Aug 2018 19:49:34 GMT
       Connection:
       - close
       Content-Length:
@@ -61,5 +61,5 @@ http_interactions:
       encoding: UTF-8
       string: '{"code":7,"category":1,"message":"DECLINE","reference":""}'
     http_version: 
-  recorded_at: Mon, 13 Aug 2018 15:15:22 GMT
+  recorded_at: Mon, 13 Aug 2018 19:49:36 GMT
 recorded_with: VCR 4.0.0

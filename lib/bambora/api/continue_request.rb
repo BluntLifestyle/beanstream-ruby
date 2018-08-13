@@ -1,5 +1,7 @@
 module Bambora::API
   class ContinueRequest
+    include HashHelpers
+
     attr_accessor :payment_method, :card_response, :interac_response
 
     def initialize(args = {})
@@ -30,14 +32,6 @@ module Bambora::API
     def to_json
       to_h.to_json
     end
-
-    private
-
-      def symbolize_keys(h)
-        h.keys.each do |key|
-          h[(key.to_sym rescue key) || key] = h.delete(key)
-        end
-      end
 
   end
 end

@@ -1,6 +1,7 @@
 module Bambora::API
   class Transaction
     include ResponseHelpers
+    include HashHelpers
 
     attr_accessor :id, :authorizing_merchant_id, :approved, :message_id,
                   :message, :auth_code, :created, :amount, :order_number, :type,
@@ -68,19 +69,6 @@ module Bambora::API
     def to_json
       to_h.to_json
     end
-
-    def approved?
-      return false if approved == 0
-      true
-    end
-
-    private
-
-      def symbolize_keys(h)
-        h.keys.each do |key|
-          h[(key.to_sym rescue key) || key] = h.delete(key)
-        end
-      end
 
   end
 end

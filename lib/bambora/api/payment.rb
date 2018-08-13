@@ -31,6 +31,7 @@ module Bambora::API
 
   class Payment
     extend Authorization
+    include APIHelpers
 
     self.merchant_id = -> { Bambora.merchant_id }
     self.passcode = -> { Bambora.payments_api_key }
@@ -172,13 +173,6 @@ module Bambora::API
     end
 
     private
-
-      def self.headers
-        {
-          "Authorization": "Passcode #{encoded_passcode}",
-          "Content-Type": "application/json"
-        }
-      end
 
       def self.create_url
         uri = URI(Bambora.api_base_url)

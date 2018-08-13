@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.na.bambora.com/v1/payments/10000016/void
+    uri: https://api.na.bambora.com/v1/payments/10000025/void
     body:
       encoding: UTF-8
-      string: '{"amount":5.0,"order_number":"1807479688"}'
+      string: '{"amount":5.0,"order_number":"8973946876"}'
     headers:
       Accept:
       - "*/*"
@@ -47,15 +47,15 @@ http_interactions:
       X-Ua-Compatible:
       - IE=edge,chrome=1
       Date:
-      - Mon, 13 Aug 2018 16:07:21 GMT
+      - Mon, 13 Aug 2018 19:49:37 GMT
       Connection:
       - close
       Content-Length:
       - '508'
     body:
       encoding: UTF-8
-      string: '{"id":"10000017","authorizing_merchant_id":300205948,"approved":"1","message_id":"1","message":"Approved","auth_code":"TEST","created":"2018-08-13T12:07:22","order_number":"1807479688","type":"VP","payment_method":"CC","risk_score":0.0,"amount":5.00,"custom":{"ref1":"","ref2":"","ref3":"","ref4":"","ref5":""},"card":{"card_type":"VI","address_match":0,"postal_result":0,"avs_result":"0","cvd_result":"1","cavv_result":"
+      string: '{"id":"10000026","authorizing_merchant_id":300205948,"approved":"1","message_id":"1","message":"Approved","auth_code":"TEST","created":"2018-08-13T15:49:38","order_number":"8973946876","type":"VP","payment_method":"CC","risk_score":0.0,"amount":5.00,"custom":{"ref1":"","ref2":"","ref3":"","ref4":"","ref5":""},"card":{"card_type":"VI","address_match":0,"postal_result":0,"avs_result":"0","cvd_result":"1","cavv_result":"
         ","avs":{"id":"U","message":"Address information is unavailable.","processed":false}}}'
     http_version: 
-  recorded_at: Mon, 13 Aug 2018 16:07:22 GMT
+  recorded_at: Mon, 13 Aug 2018 19:49:38 GMT
 recorded_with: VCR 4.0.0

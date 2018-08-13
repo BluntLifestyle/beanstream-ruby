@@ -1,6 +1,7 @@
 module Bambora::API
   class PaymentResponse
     include ResponseHelpers
+    include HashHelpers
 
     attr_accessor :id, :authorizing_merchant_id, :approved, :message_id,
                   :message, :auth_code, :created, :order_number, :type,
@@ -55,14 +56,6 @@ module Bambora::API
         links: links
       }
     end
-
-    private
-
-      def symbolize_keys(h)
-        h.keys.each do |key|
-          h[(key.to_sym rescue key) || key] = h.delete(key)
-        end
-      end
 
   end
 end

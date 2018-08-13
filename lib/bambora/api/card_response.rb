@@ -1,5 +1,7 @@
 module Bambora::API
   class CardResponse
+    include HashHelpers
+    
     attr_accessor :card_type, :last_four, :cvd_result, :address_match,
                   :avs_result, :expiry_month, :expiry_year, :cavv_result
 
@@ -36,14 +38,6 @@ module Bambora::API
     def to_json
       to_h.to_json
     end
-
-    private
-
-      def symbolize_keys(h)
-        h.keys.each do |key|
-          h[(key.to_sym rescue key) || key] = h.delete(key)
-        end
-      end
 
   end
 end

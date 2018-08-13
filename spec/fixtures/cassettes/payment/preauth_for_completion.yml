@@ -5,12 +5,12 @@ http_interactions:
     uri: https://api.na.bambora.com/v1/payments
     body:
       encoding: UTF-8
-      string: '{"amount":"83.18","payment_method":"card","order_number":"5121981668","billing":{"name":"Chastity
-        Price","address_line1":"1407 Graymalkin Lane","address_line2":"","city":"Gatineau","province":"QC","country":"CA","postal_code":"111
-        111","phone_number":"","email_address":""},"shipping":{"name":"Dennise Auer","address_line1":"1407
+      string: '{"amount":"74.37","payment_method":"card","order_number":"9328570403","billing":{"name":"Suzan
+        Kuvalis","address_line1":"1407 Graymalkin Lane","address_line2":"","city":"Gatineau","province":"QC","country":"CA","postal_code":"111
+        111","phone_number":"","email_address":""},"shipping":{"name":"Kasi Lehner","address_line1":"1407
         Graymalkin Lane","address_line2":"","city":"Gatineau","province":"QC","country":"CA","postal_code":"111
-        111","phone_number":"","email_address":""},"card":{"number":"4504481742333","name":"Sharyl
-        Hahn","expiry_month":"12","expiry_year":"18","cvd":"123","complete":false}}'
+        111","phone_number":"","email_address":""},"card":{"number":"4504481742333","name":"Eusebio
+        Spencer","expiry_month":"12","expiry_year":"18","cvd":"123","complete":false}}'
     headers:
       Accept:
       - "*/*"
@@ -23,7 +23,7 @@ http_interactions:
       Content-Type:
       - application/json
       Content-Length:
-      - '600'
+      - '602'
       Host:
       - api.na.bambora.com
   response:
@@ -59,8 +59,8 @@ http_interactions:
       - '624'
     body:
       encoding: UTF-8
-      string: '{"id":"10000027","authorizing_merchant_id":300205948,"approved":"1","message_id":"1","message":"Approved","auth_code":"TEST","created":"2018-08-13T15:49:38","order_number":"5121981668","type":"PA","payment_method":"CC","risk_score":0.0,"amount":83.18,"custom":{"ref1":"","ref2":"","ref3":"","ref4":"","ref5":""},"card":{"card_type":"VI","last_four":"2333","address_match":1,"postal_result":1,"avs_result":"1","cvd_result":"1","avs":{"id":"Y","message":"Street
-        address and Postal/ZIP match.","processed":true}},"links":[{"rel":"complete","href":"https://api.na.bambora.com/v1/payments/10000027/completions","method":"POST"}]}'
+      string: '{"id":"10000028","authorizing_merchant_id":300205948,"approved":"1","message_id":"1","message":"Approved","auth_code":"TEST","created":"2018-08-13T15:49:39","order_number":"9328570403","type":"PA","payment_method":"CC","risk_score":0.0,"amount":74.37,"custom":{"ref1":"","ref2":"","ref3":"","ref4":"","ref5":""},"card":{"card_type":"VI","last_four":"2333","address_match":1,"postal_result":1,"avs_result":"1","cvd_result":"1","avs":{"id":"Y","message":"Street
+        address and Postal/ZIP match.","processed":true}},"links":[{"rel":"complete","href":"https://api.na.bambora.com/v1/payments/10000028/completions","method":"POST"}]}'
     http_version: 
-  recorded_at: Mon, 13 Aug 2018 19:49:38 GMT
+  recorded_at: Mon, 13 Aug 2018 19:49:39 GMT
 recorded_with: VCR 4.0.0

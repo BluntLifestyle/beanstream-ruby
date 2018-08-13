@@ -1,5 +1,7 @@
 module Bambora::API
   class ErrorResponse
+    include HashHelpers
+
     attr_accessor :code, :category, :message, :reference, :details, :validation
 
     def initialize(args = {})
@@ -25,14 +27,6 @@ module Bambora::API
     def approved?
       false
     end
-
-    private
-
-      def symbolize_keys(h)
-        h.keys.each do |key|
-          h[(key.to_sym rescue key) || key] = h.delete(key)
-        end
-      end
 
   end
 end
