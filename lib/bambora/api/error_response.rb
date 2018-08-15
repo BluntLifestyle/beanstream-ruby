@@ -1,16 +1,11 @@
 module Bambora::API
   class ErrorResponse
-    include HashHelpers
 
     attr_accessor :code, :category, :message, :reference, :details, :validation
 
     def initialize(args = {})
       args = {} if args.nil?
-      if args.respond_to? :symbolize_keys!
-        args.symbolize_keys!
-      else
-        symbolize_keys(args)
-      end
+      args.symbolize_keys!
       self.code = args[:code]
       self.category = args[:category]
       self.message = args[:message]

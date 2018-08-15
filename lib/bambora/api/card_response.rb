@@ -1,17 +1,12 @@
 module Bambora::API
   class CardResponse
-    include HashHelpers
-    
+
     attr_accessor :card_type, :last_four, :cvd_result, :address_match,
                   :avs_result, :expiry_month, :expiry_year, :cavv_result
 
     def initialize(args = {})
       args = {} if args.nil?
-      if args.respond_to? :symbolize_keys!
-        args.symbolize_keys!
-      else
-        symbolize_keys(args)
-      end
+      args.symbolize_keys!
       self.card_type = args[:card_type]
       self.last_four = args[:last_four]
       self.cvd_result = args[:cvd_result]

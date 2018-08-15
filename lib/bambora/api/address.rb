@@ -6,6 +6,7 @@ module Bambora::API
 
     def initialize(args = {})
       args = {} if args.nil?
+      args.symbolize_keys!
       self.name = args[:name] || ''
       self.address_line1 = args[:address_line1] || ''
       self.address_line2 = args[:address_line2] || ''

@@ -7,6 +7,7 @@ module Bambora::API
 
     def initialize(args = {})
       args = {} if args.nil?
+      args.symbolize_keys!
       self.order_number = args[:order_number] || ''
       self.amount = args[:amount]
       self.payment_method = args[:payment_method]

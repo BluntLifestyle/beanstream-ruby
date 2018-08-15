@@ -2,7 +2,6 @@ require 'cgi'
 
 module Bambora::API
   class Criteria
-    include HashHelpers
 
     FIELDS = {
       transaction_id: 1,
@@ -44,11 +43,7 @@ module Bambora::API
 
     def initialize(args = {})
       args = {} if args.nil?
-      if args.respond_to? :symbolize_keys!
-        args.symbolize_keys!
-      else
-        symbolize_keys(args)
-      end
+      args.symbolize_keys!
       self.field = args[:field]
       self.operator = args[:operator]
       self.value = args[:value]

@@ -1,17 +1,11 @@
 module Bambora::API
-
   class SearchRequest
-    include HashHelpers
 
     attr_accessor :name, :start_date, :end_date, :start_row, :end_row, :criteria
 
     def initialize(args = {})
       args = {} if args.nil?
-      if args.respond_to? :symbolize_keys!
-        args.symbolize_keys!
-      else
-        symbolize_keys(args)
-      end
+      args.symbolize_keys!
       self.name = args[:name] || 'Search'
       self.start_date = Chronic.parse(args[:start_date]) || Time.now.beginning_of_day
       self.end_date = Chronic.parse(args[:end_date]) || start_date.end_of_day

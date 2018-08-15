@@ -1,6 +1,5 @@
 module Bambora::API
   class SearchRecord
-    include HashHelpers
 
     attr_accessor :row_id,  :trn_id, :trn_date_time, :trn_type,
                   :trn_order_number, :trn_payment_method, :trn_comments,
@@ -19,11 +18,7 @@ module Bambora::API
 
     def initialize(args = {})
       args = {} if args.nil?
-      if args.respond_to? :symbolize_keys!
-        args.symbolize_keys!
-      else
-        symbolize_keys(args)
-      end
+      args.symbolize_keys!
       self.row_id = args[:row_id]
       self.trn_id = args[:trn_id]
       self.trn_date_time = args[:trn_date_time]

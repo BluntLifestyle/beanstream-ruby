@@ -1,7 +1,6 @@
 module Bambora::API
   class PaymentResponse
     include ResponseHelpers
-    include HashHelpers
 
     attr_accessor :id, :authorizing_merchant_id, :approved, :message_id,
                   :message, :auth_code, :created, :order_number, :type,
@@ -10,11 +9,7 @@ module Bambora::API
 
     def initialize(args = {})
       args = {} if args.nil?
-      if args.respond_to? :symbolize_keys!
-        args.symbolize_keys!
-      else
-        symbolize_keys(args)
-      end
+      args.symbolize_keys!
       self.id = args[:id]
       self.authorizing_merchant_id = args[:authorizing_merchant_id]
       self.approved = args[:approved]

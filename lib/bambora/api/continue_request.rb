@@ -1,16 +1,11 @@
 module Bambora::API
   class ContinueRequest
-    include HashHelpers
 
     attr_accessor :payment_method, :card_response, :interac_response
 
     def initialize(args = {})
       args = {} if args.nil?
-      if args.respond_to? :symbolize_keys!
-        args.symbolize_keys!
-      else
-        symbolize_keys(args)
-      end
+      args.symbolize_keys!
       self.payment_method = args[:payment_method].to_sym
       self.card_response = CardResponse.new(args[:card_response])
       self.interac_response = InteracResponse.new(args[:interac_response])

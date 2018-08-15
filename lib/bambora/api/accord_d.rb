@@ -4,6 +4,7 @@ module Bambora::API
 
     def initialize(args)
       args = {} if args.nil?
+      args.symbolize_keys!
       self.financing_type = args[:financing_type] || ''
       self.plan_number = args[:plan_number] || ''
       self.grace_period = args[:grace_period] || ''

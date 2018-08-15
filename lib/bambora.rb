@@ -17,7 +17,6 @@ module Bambora
     autoload :Criteria,                    'bambora/api/criteria'
     autoload :Custom,                      'bambora/api/custom'
     autoload :ErrorResponse,               'bambora/api/error_response'
-    autoload :HashHelpers,                 'bambora/api/hash_helpers'
     autoload :PaymentRequest,              'bambora/api/payment_request'
     autoload :PaymentResponse,             'bambora/api/payment_response'
     autoload :Payment,                     'bambora/api/payment'
@@ -29,6 +28,9 @@ module Bambora
     autoload :SearchRequest,               'bambora/api/search_request'
     autoload :SearchResponse,              'bambora/api/search_response'
     autoload :Secure3D,                    'bambora/api/secure_3d'
+    autoload :TokenRequest,                'bambora/api/token_request'
+    autoload :TokenResponse,               'bambora/api/token_response'
+    autoload :Token,                       'bambora/api/token'
     autoload :Transaction,                 'bambora/api/transaction'
     autoload :VoidRequest,                 'bambora/api/void_request'
   end

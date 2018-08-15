@@ -5,6 +5,7 @@ module Bambora::API
 
     def initialize(args = {})
       args = {} if args.nil?
+      args.symbolize_keys!
       self.ref1 = args[:ref1] || ''
       self.ref2 = args[:ref2] || ''
       self.ref3 = args[:ref3] || ''

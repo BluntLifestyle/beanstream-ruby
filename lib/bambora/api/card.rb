@@ -9,6 +9,7 @@ module Bambora::API
 
     def initialize(args = {})
       args = {} if args.nil?
+      args.symbolize_keys!
       self.number = args[:number] || ''
       self.name = args[:name] || ''
       self.expiry_month = args[:expiry_month] || ''

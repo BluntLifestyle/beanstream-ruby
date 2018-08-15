@@ -1,9 +1,11 @@
 module Bambora::API
   class VoidRequest
+    
     attr_accessor :order_number, :amount
 
     def initialize(args = {})
       args = {} if args.nil?
+      args.symbolize_keys!
       self.order_number = args[:order_number] || ''
       self.amount = args[:amount] || 0.0
     end

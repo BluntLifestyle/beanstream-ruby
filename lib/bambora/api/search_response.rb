@@ -1,14 +1,11 @@
 module Bambora::API
   class SearchResponse
+    
     attr_accessor :records
 
     def initialize(args = {})
       args = {} if args.nil?
-      if args.respond_to? :symbolize_keys!
-        args.symbolize_keys!
-      else
-        symbolize_keys(args)
-      end
+      args.symbolize_keys!
       self.records = build_search_records(args[:records])
     end
 

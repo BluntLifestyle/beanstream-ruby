@@ -1,9 +1,11 @@
 module Bambora::API
   class Secure3D
+    
     attr_accessor :enabled, :xid, :cavv, :eci
 
     def initialize(args = {})
       args = {} if args.nil?
+      args.symbolize_keys!
       self.enabled = args[:enabled] || false
       self.xid = args[:xid] || ''
       self.cavv = args[:cavv] || ''
