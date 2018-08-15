@@ -1,10 +1,11 @@
 module Bambora::API
   class TokenRequest
 
-    attr_accessor :number, :expiry_month, :expiry_year, :cvd
+    attr_accessor :name, :number, :expiry_month, :expiry_year, :cvd
 
     def initialize(args = {})
       if args.kind_of? Card
+        self.name = args.name
         self.number = args.number
         self.expiry_month = args.expiry_month
         self.expiry_year = args.expiry_year
@@ -12,6 +13,7 @@ module Bambora::API
       else
         args = {} if args.nil?
         args.symbolize_keys!
+        self.name = args[:name]
         self.number = args[:number]
         self.expiry_month = args[:expiry_month]
         self.expiry_year = args[:expiry_year]

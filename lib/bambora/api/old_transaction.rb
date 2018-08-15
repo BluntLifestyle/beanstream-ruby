@@ -1,7 +1,3 @@
-require 'rest-client'
-require 'base64'
-require 'json'
-
 module Bambora::API
   class Transaction
 

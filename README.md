@@ -15,14 +15,12 @@ gem install bambora
 ```
 
 # Code Sample
-Take a credit card Payment:
+Process a credit card payment
 ```ruby
 include Bambora::API
 
-response = Payment.create({
-  order_number: '20X8-R123...',
+payment = Payment.create(
   amount: 12.95,
-  payment_method: :card,
   card: {
     name: 'John Smith',
     number: '4030000010001234',
@@ -30,8 +28,43 @@ response = Payment.create({
     expiry_year: '22',
     cvd: '123'
   }
-})
+)
+```
+
+Create a token to process a payment or create a profile
+```ruby
+token = Token.create(
+  number: '4030000010001234',
+  expiry_year: '07',
+  expiry_year: '22',
+  cvd: '123'
+)
+```
+
+Search for transactions matching 10.00 $
+```ruby
+records = Report.search(criteria: [{ field: 'amount', operator: 'equals', value: 10.0 }] )
+```
+
+Create a payment profile for a credit card
+```ruby
+profile = Profile.create card: {
+  name: 'John Smith',
+  number: '4030000010001234',
+  expiry_year: '07',
+  expiry_year: '22',
+  cvd: '123'
+}
+```
+
+Or use a token
+```ruby
+profile = Profile.create token: {
+  name: 'John Smith',
+  code: 'a02-1e644205-9cef-4fb4-b00c-41ab7627333c'
+}
 ```
 
 # Reporting Issues
+
 Found a bug or want a feature improvement? Create a new Issue here on the github page, or email Bambora support support@beanstream.com

@@ -1,6 +1,3 @@
-require 'securerandom'
-require 'rest-client'
-
 module Bambora::API
 
   #   def self.generateRandomOrderId(prefix)

@@ -1,5 +1,17 @@
 module Bambora::API
   class Token
+    attr_accessor :name, :code
+
+    def initialize(args = {})
+      if args.kind_of? TokenResponse
+        self.code = args.token
+      else
+        args = {} if args.nil?
+        args.symbolize_keys!
+        self.name = args[:name]
+        self.code = args[:code]
+      end
+    end
 
     def self.create(data = {})
       if data.kind_of? TokenRequest
@@ -21,7 +33,7 @@ module Bambora::API
         response = ErrorResponse.new(JSON.parse(e.response.body))
       end
 
-      response
+      new(name: fetch_name(data), code: response.token)
     end
 
     private
@@ -31,6 +43,23 @@ module Bambora::API
         uri = URI(Bambora.api_base_url)
         uri.path = '/scripts/tokenization/tokens'
         uri
+      end
+
+      def self.fetch_name(data)
+        return data.name if data.respond_to? :name
+        return data.card.name if data.respond_to? :card
+        if data.respond_to?(:[])
+          if !data[:name].empty?
+            return data[:name]
+          elsif !data[:card][:name].empty?
+            data[:card][:name]
+          end
+          ''
+        else
+          ''
+        end
+      rescue
+        ''
       end
 
   end

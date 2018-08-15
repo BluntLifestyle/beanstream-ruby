@@ -1,5 +1,3 @@
-require 'base64'
-
 module Bambora::API
   module Authorization
     def merchant_id
