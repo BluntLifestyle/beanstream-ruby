@@ -1,0 +1,61 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.na.bambora.com/v1/profiles
+    body:
+      encoding: UTF-8
+      string: '{"billing":null,"validate":null,"card":{"number":"4504481742333","name":"John
+        Smith","expiry_month":"12","expiry_year":"18","cvd":"123"}}'
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (linux-gnu x86_64) ruby/2.4.0p0
+      Authorization:
+      - Passcode MzAwMjA1OTQ4OjFjMUVhMTEwYmQ4RjQwMmE4YUYyQmIzZDBiMzJCRDdi
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '137'
+      Host:
+      - api.na.bambora.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Pragma:
+      - no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Expires:
+      - "-1"
+      Server:
+      - Microsoft-IIS/8.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - accept, origin, content-type
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Date:
+      - Thu, 16 Aug 2018 17:12:51 GMT
+      Connection:
+      - close
+      Content-Length:
+      - '94'
+    body:
+      encoding: UTF-8
+      string: '{"code":1,"message":"Operation Successful","customer_code":"C3e6F7240A6a4Fe09fe2FE08C4f93555"}'
+    http_version: 
+  recorded_at: Thu, 16 Aug 2018 17:12:51 GMT
+recorded_with: VCR 4.0.0

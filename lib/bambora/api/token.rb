@@ -13,7 +13,20 @@ module Bambora::API
       end
     end
 
+    def to_h
+      {
+        name: name,
+        code: code
+      }
+    end
+
+    def to_json
+      to_h.to_json
+    end
+
     def self.create(data = {})
+      name = fetch_name(data)
+      
       if data.kind_of? TokenRequest
         request = data
       elsif data.kind_of?(Hash) || data.kind_of?(Card)
@@ -33,7 +46,7 @@ module Bambora::API
         response = ErrorResponse.new(JSON.parse(e.response.body))
       end
 
-      new(name: fetch_name(data), code: response.token)
+      new(name: name, code: response.token)
     end
 
     private

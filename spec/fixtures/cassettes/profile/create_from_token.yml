@@ -1,0 +1,60 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.na.bambora.com/v1/profiles
+    body:
+      encoding: UTF-8
+      string: '{"billing":null,"validate":null,"token":{"name":"Alice Smith","code":"a13-444bb336-c48a-4966-91bf-f8a9262c1f48"}}'
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (linux-gnu x86_64) ruby/2.4.1p111
+      Authorization:
+      - Passcode MzAwMjA1OTQ4OjFjMUVhMTEwYmQ4RjQwMmE4YUYyQmIzZDBiMzJCRDdi
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '113'
+      Host:
+      - api.na.bambora.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Pragma:
+      - no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Expires:
+      - "-1"
+      Server:
+      - Microsoft-IIS/8.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - accept, origin, content-type
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Date:
+      - Thu, 16 Aug 2018 19:42:11 GMT
+      Connection:
+      - close
+      Content-Length:
+      - '94'
+    body:
+      encoding: UTF-8
+      string: '{"code":1,"message":"Operation Successful","customer_code":"8303CEFeAB604313bA3Db8E6860Cc20D"}'
+    http_version: 
+  recorded_at: Thu, 16 Aug 2018 19:42:12 GMT
+recorded_with: VCR 4.0.0

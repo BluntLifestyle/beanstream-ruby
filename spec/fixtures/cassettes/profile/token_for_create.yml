@@ -1,0 +1,54 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.na.bambora.com/scripts/tokenization/tokens
+    body:
+      encoding: UTF-8
+      string: '{"number":"5100000010001004","expiry_month":"12","expiry_year":"18","cvd":"123"}'
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (linux-gnu x86_64) ruby/2.4.1p111
+      Content-Length:
+      - '80'
+      Host:
+      - api.na.bambora.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private
+      Content-Type:
+      - application/json; charset=utf-8
+      Server:
+      - Microsoft-IIS/8.5
+      X-Aspnet-Version:
+      - 2.0.50727
+      X-Aspnetmvc-Version:
+      - '2.0'
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - accept, origin, content-type
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Date:
+      - Thu, 16 Aug 2018 19:42:11 GMT
+      Connection:
+      - close
+      Content-Length:
+      - '86'
+    body:
+      encoding: UTF-8
+      string: '{"token":"a13-444bb336-c48a-4966-91bf-f8a9262c1f48","code":1,"version":1,"message":""}'
+    http_version: 
+  recorded_at: Thu, 16 Aug 2018 19:42:11 GMT
+recorded_with: VCR 4.0.0

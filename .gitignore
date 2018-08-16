@@ -36,3 +36,6 @@ build/
 
 # lockfile
 Gemfile.lock
+
+# rbenv ruby version
+.ruby-version

@@ -2,10 +2,7 @@ module Bambora::API
   describe Report do
 
     before do
-      # Blunt Inc Test Account
       Bambora.merchant_id      = '300205948'
-      # Bambora.payments_api_key = 'D5544E039FEc4cb9b8bEc18F69a04f40'
-      # Bambora.recurring_api_key = '40b11f5789c94741AaC5636b47F9C302'
       Bambora.reporting_api_key = 'dCD0320eF645452F828589F0e43B4224'
     end
 
@@ -22,7 +19,7 @@ module Bambora::API
     describe ".minimal" do
       # TODO: unclear how/if this should work. Documentation is lacking and
       # official implementation in ruby is absent. Maybe look at other languages?
-      # 
+      #
       # it "searches for transactions" do
       #   VCR.use_cassette('report/minimal') do
       #     response = Report.minimal(criteria: [{ field: 'amount', operator: 'equals', value: 10.0 }] )
