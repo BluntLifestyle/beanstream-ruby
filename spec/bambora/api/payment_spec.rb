@@ -32,22 +32,45 @@ module Bambora::API
     end
 
     describe ".return" do
-      let(:purchase_request) { build(:payment_request, amount: 10.00) }
-      let(:request) { build(:return_request, amount: 10.00, order_number: purchase_request.order_number) }
+      context "when using valid payment information" do
+        let(:purchase_request) { build(:payment_request, amount: 10.00) }
+        let(:request) { build(:return_request, amount: 10.00, order_number: purchase_request.order_number) }
 
-      it "returns a payment" do
-        purchase_response = nil
+        it "returns a payment" do
+          purchase_response = nil
 
-        VCR.use_cassette('payment/create_purchase_for_return') do
-          purchase_response = Payment.create(purchase_request)
-          expect(purchase_response).to be_approved
-          expect(purchase_response).to be_purchased
+          VCR.use_cassette('payment/create_purchase_for_return') do
+            purchase_response = Payment.create(purchase_request)
+            expect(purchase_response).to be_approved
+            expect(purchase_response).to be_purchased
+          end
+
+          VCR.use_cassette 'payment/return' do
+            response = Payment.return(purchase_response.id, request)
+            expect(response).to be_approved
+            expect(response).to be_returned
+          end
         end
+      end
 
-        VCR.use_cassette 'payment/return' do
-          response = Payment.return(purchase_response.id, request)
-          expect(response).to be_approved
-          expect(response).to be_returned
+      context "when using invalid return information" do
+        let(:purchase_request) { build(:payment_request, amount: 10.00) }
+        let(:request) { build(:return_request, amount: 10.00, order_number: purchase_request.order_number) }
+
+        it "returns a payment" do
+          purchase_response = nil
+
+          VCR.use_cassette('payment/create_purchase_for_return') do
+            purchase_response = Payment.create(purchase_request)
+            expect(purchase_response).to be_approved
+            expect(purchase_response).to be_purchased
+          end
+
+          VCR.use_cassette 'payment/return_denied' do
+            response = Payment.return('12345', request)
+            expect(response).to be_declined
+            expect(response.code).to eq 314
+          end
         end
       end
     end

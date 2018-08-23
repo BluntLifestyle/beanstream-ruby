@@ -1,0 +1,62 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.na.bambora.com/v1/payments/12345/returns
+    body:
+      encoding: UTF-8
+      string: '{"amount":10.0,"order_number":"8961375210"}'
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (linux-gnu x86_64) ruby/2.4.1p111
+      Authorization:
+      - Passcode MzAwMjA1OTQ4OkQ1NTQ0RTAzOUZFYzRjYjliOGJFYzE4RjY5YTA0ZjQw
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '43'
+      Host:
+      - api.na.bambora.com
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Cache-Control:
+      - no-cache
+      Pragma:
+      - no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Expires:
+      - "-1"
+      Server:
+      - Microsoft-IIS/8.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - accept, origin, content-type
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Date:
+      - Thu, 23 Aug 2018 20:47:09 GMT
+      Connection:
+      - close
+      Content-Length:
+      - '207'
+    body:
+      encoding: UTF-8
+      string: '{"code":314,"category":3,"message":"Missing or invalid payment information
+        - Please validate all required payment information.","reference":"","details":[{"field":"adjId","message":"Invalid
+        adjustment id"}]}'
+    http_version: 
+  recorded_at: Thu, 23 Aug 2018 20:47:10 GMT
+recorded_with: VCR 4.0.0

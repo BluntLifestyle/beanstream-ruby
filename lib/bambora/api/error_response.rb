@@ -14,9 +14,23 @@ module Bambora::API
       self.validation = args[:validation]
     end
 
+    def to_h
+      {
+        code: code,
+        category: category,
+        message: message,
+        reference: reference,
+        details: details,
+        validation: validation
+      }
+    end
+
+    def to_json
+      to_h.to_json
+    end
+
     def declined?
-      return true if message == 'DECLINE'
-      false
+      true
     end
 
     def approved?

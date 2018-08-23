@@ -32,6 +32,7 @@ module Bambora::API
 
     def to_h
       {
+        id: id,
         authorizing_merchant_id: authorizing_merchant_id,
         approved: approved,
         message_id: message_id,
@@ -50,6 +51,10 @@ module Bambora::API
         interac_online: interac_online,
         links: links
       }
+    end
+
+    def to_json
+      to_h.to_json
     end
 
   end
